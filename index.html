@@ -65,7 +65,7 @@
     });
 
 
-    // Verificar se a largura da tela é menor que 600 pixels usando uma media query
+  // Verificar se a largura da tela é menor que 600 pixels usando uma media query
 const mediaQuery = window.matchMedia("(max-width: 600px)");
 
 // Função para reposicionar o botão "Não" de forma aleatória
@@ -83,16 +83,15 @@ function reposicionarBotaoNao() {
 const handleMediaQueryChange = (mediaQuery) => {
   if (mediaQuery.matches) {
     // Executar código específico para dispositivos móveis ou telas estreitas
+    naoButton.addEventListener("touchstart", handleTouchStart);
     reposicionarBotaoNao();
     audio.play();
   } else {
     // Executar código específico para telas maiores
     naoButton.removeEventListener("touchstart", handleTouchStart);
+    naoButton.style.position = "static"; // Definir a posição de volta para o padrão
   }
 };
-
-// Adicionar um ouvinte para a mudança na condição da media query
-mediaQuery.addListener(handleMediaQueryChange);
 
 // Função para manipular o evento de toque/tap no botão "Não"
 const handleTouchStart = (event) => {
@@ -101,11 +100,12 @@ const handleTouchStart = (event) => {
   audio.play(); // Reproduzir áudio
 };
 
-// Adicionar manipulador de eventos para toque/tap no botão "Não"
-naoButton.addEventListener("touchstart", handleTouchStart);
+// Adicionar um ouvinte para a mudança na condição da media query
+mediaQuery.addListener(handleMediaQueryChange);
 
 // Executar a função de reposicionamento e reprodução de áudio quando a página carregar
 handleMediaQueryChange(mediaQuery);
-  </script>
+
+</script>
 </body>
 </html>
