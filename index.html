@@ -8,6 +8,7 @@
     margin: 0;
     padding: 0;
     display: flex;
+    flex-direction: column;
     justify-content: center;
     align-items: center;
     min-height: 100vh;
@@ -26,15 +27,17 @@
     top: 50px;
     left: 50%;
     transform: translateX(-50%);
-    font-size: 48px;
+    font-size: 18px;
     display: none;
     background-color: rgba(0, 0, 0, 0.8);
     padding: 10px;
     border-radius: 5px;
+    z-index: 1;
   }
 
   #buttons-container {
     display: flex;
+    flex-direction: column;
     gap: 20px;
     margin-top: 20px;
   }
@@ -47,7 +50,6 @@
     padding: 10px 20px;
     cursor: pointer;
     transition: transform 0.3s ease-in-out;
-    position: relative;
   }
 
   .button:hover {
@@ -69,20 +71,19 @@
     const audio = document.getElementById("audio");
     const message = document.getElementById("message");
 
+    let timeoutId; // Variable to store the timeout ID
+
     naoButton.addEventListener("mouseenter", () => {
       audio.play();
       message.style.display = "block";
     });
 
     naoButton.addEventListener("mouseleave", () => {
-      message.style.display = "none";
-      const screenWidth = window.innerWidth;
-      const screenHeight = window.innerHeight;
-      const randomX = Math.random() * (screenWidth - 100); // 100 is the button width
-      const randomY = Math.random() * (screenHeight - 40); // 40 is the button height
-      naoButton.style.position = "absolute";
-      naoButton.style.left = `${randomX}px`;
-      naoButton.style.top = `${randomY}px`;
+      clearTimeout(timeoutId); // Clear any existing timeout
+      timeoutId = setTimeout(() => {
+        message.style.display = "none";
+        naoButton.style.position = "relative"; // Restore the button's position
+      }, 2000); // 2000 milliseconds delay
     });
   </script>
 </body>
